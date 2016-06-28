@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{97E44744-A55C-480C-8209-D3D393FE03F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EC752618-AC4E-4A64-8F79-6D0CAFBE48FB}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "sdsky", "src\sdsky\sdsky.xproj", "{38628B9F-4A15-4609-A9C1-B5E8FACBC900}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38628B9F-4A15-4609-A9C1-B5E8FACBC900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38628B9F-4A15-4609-A9C1-B5E8FACBC900}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38628B9F-4A15-4609-A9C1-B5E8FACBC900}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38628B9F-4A15-4609-A9C1-B5E8FACBC900}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{38628B9F-4A15-4609-A9C1-B5E8FACBC900} = {97E44744-A55C-480C-8209-D3D393FE03F6}
+	EndGlobalSection
+EndGlobal

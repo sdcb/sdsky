@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>sdsky</title>
+    <environment names="Development">
+        <link href="~/css/site.css" rel="stylesheet" />
+    </environment>
+    <environment names="Production">
+        <link href="~/min/app.min.css" rel="stylesheet" />
+    </environment>
+</head>
+<body style="margin: 0; overflow: hidden">
+    <canvas></canvas>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+
+        <script src="~/app/float3x2.js"></script>
+        <script src="~/app/PromiseEvent.js"></script>
+        <script src="~/app/CanvasManager.js"></script>
+        <script src="~/app/app.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/min/app.min.js"></script>
+        <script src="~/min/lib.min.js"></script>
+    </environment>
+</body>
+</html>

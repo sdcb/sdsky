@@ -1,0 +1,22 @@
+﻿// Configure bundling and minification for the project.
+// More info at https://go.microsoft.com/fwlink/?LinkId=808241
+[
+  {
+    "outputFileName": "wwwroot/min/app.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/min/app.min.js",
+    "inputFiles": [
+      "wwwroot/app/*.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/min/lib.min.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery/dist/jquery.min.js"
+    ]
+  }
+]

@@ -243,3 +243,12 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# custom....
+**/wwwroot/lib
+lib.min.css
+app.min.css
+**/wwwroot/typings
+*.js
+*.js.map
+appsettings.*.json
