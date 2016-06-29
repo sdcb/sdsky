@@ -9,18 +9,17 @@
             this.ctx = canvas.getContext("2d");
         }
 
-        get width() {
+        width() {
             return this.canvas.width;
         }
 
-        get height() {
+        height() {
             return this.canvas.height;
         }
 
         get font() {
             return this.ctx.font;
         }
-
         set font(font: string) {
             this.ctx.font = font;
         }
@@ -28,9 +27,19 @@
         get textBaseLine() {
             return <ITextBaseLineType>this.ctx.textBaseline;
         }
-
         set textBaseLine(baseline: ITextBaseLineType) {
             this.ctx.textBaseline = baseline;
+        }
+
+        resizeTo(width: number, height: number) {
+            let font = this.font;
+            let textBaseLine = this.textBaseLine;
+
+            this.canvas.width = width;
+            this.canvas.height = height;
+
+            this.font = font;
+            this.textBaseLine = textBaseLine;
         }
 
         fillRect(x: number, y: number, w: number, h: number, brush: IBrushType) {
@@ -94,11 +103,19 @@
 
         clear() {
             this.setIdentity();
-            this.ctx.clearRect(0, 0, this.width, this.height);
+            this.ctx.clearRect(0, 0, this.width(), this.height());
         }
 
         transform(matrix: float3x2) {
             this.ctx.transform.apply(this.ctx, matrix.get());
+        }
+
+        createLinearGradient(x0: number, y0: number, x1: number, y1: number) {
+            return this.ctx.createLinearGradient(x0, y0, x1, y1);
+        }
+
+        createRadialGradient(r = 1) {
+            return this.ctx.createRadialGradient(0, 0, 0, 0, 0, r);
         }
     }
 }

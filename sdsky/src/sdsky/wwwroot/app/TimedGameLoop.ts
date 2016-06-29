@@ -22,5 +22,13 @@
             this._totalRenderTime += frameTime;
             super.render();
         }
+
+        roundPerSecond(round: number) {
+            return round * this.totalRenderTime * Math.PI * 2;
+        }
+
+        anglePerSecond(angle: number) {
+            return angle / 360 * this.totalRenderTime * Math.PI * 2;
+        }
     }
 }

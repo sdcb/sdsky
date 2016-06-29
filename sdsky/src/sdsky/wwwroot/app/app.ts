@@ -1,17 +1,29 @@
 ﻿namespace sdsky {
     var canvas = new CanvasManager(<HTMLCanvasElement>document.querySelector("canvas"));
-    let gameLoop = new TimedGameLoop();
+    let loop = new TimedGameLoop();
 
     canvas.textBaseLine = "top";
+    canvas.font = "14pt Consolas";
 
-    gameLoop.onRender.connect(() => {
+    let brush = canvas.createRadialGradient();
+    brush.addColorStop(0, "white");
+    brush.addColorStop(1, "black");
+
+    var fps = new FpsContext();
+
+    loop.onRender.connect(() => {
         canvas.clear();
 
-        canvas.fillRect(0, 0, canvas.width, canvas.height, "yellow");
-        canvas.fillText(gameLoop.totalRenderTime.toFixed(2), 0, 0, "red");
+        fps.update(loop.totalRenderTime);
 
-        canvas.transform(float3x2.translation(150, 100));
-        canvas.rotate(new Date().getTime() / 1000);
-        canvas.drawLine(-30, -30, 30, 30, "red", 10);
+        canvas.fillText(`FPS: ${fps.fps.toFixed(0)}`, 0, 0, "blue");
+
+        canvas.transform(float3x2.scale(50, 50).translation(100, 100));
+        canvas.fillCircle(0, 0, 1, brush);
+    });
+
+    canvas.resizeTo(window.innerWidth, window.innerHeight);
+    window.addEventListener("resize", ev => {
+        canvas.resizeTo(window.innerWidth, window.innerHeight);
     });
 }
