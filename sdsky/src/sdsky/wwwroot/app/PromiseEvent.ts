@@ -29,7 +29,7 @@
     export class PromiseEventVoid extends PromiseEventBase<IPromiseEventCallbackVoid> {
         fire() {
             let defer = $.Deferred<void>();
-            $.when(...this._actions.map(a => a(void 0))).then(() => {
+            $.when(...this._actions.map(a => a())).then(() => {
                 defer.resolve();
             }).fail(() => {
                 defer.reject();
