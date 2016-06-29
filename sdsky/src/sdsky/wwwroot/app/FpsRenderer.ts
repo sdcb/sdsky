@@ -1,6 +1,6 @@
 ﻿namespace sdsky {
     const RefreshFpsInterval = 1;
-    export class FpsContext {
+    class FpsContext {
         fps = 0;
         private lastRecordTime = 0;
         private framesSinceLastRecord = 0;
@@ -14,6 +14,18 @@
             } else {
                 this.framesSinceLastRecord += 1;
             }
+        }
+    }
+
+    export class FpsRenderer extends RendererBase {
+        private ctx = new FpsContext();
+
+        update(time: number) {
+            this.ctx.update(time);
+        }
+
+        render(time: number) {
+            this.canvas.fillText(`FPS: ${this.ctx.fps.toFixed(0)}`, 0, 0, "blue");
         }
     }
 }
