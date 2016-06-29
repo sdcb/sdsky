@@ -18,12 +18,13 @@
         }
 
         update(): boolean {
-            return !!this.onUpdate.fire(this.totalRenderTime);
+            this.onUpdate.fire(this.totalRenderTime);
+            this.decideNextRender();
+            return false;
         }
 
         render() {
             this.onRender.fire(this.totalRenderTime);
-            this.decideNextRender();
         }
 
         decideNextRender() {
