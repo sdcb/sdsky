@@ -49,10 +49,21 @@
             this.ctx.strokeRect(x, y, w, h);
         }
 
-        fillText(text: string, x: number, y: number, brush: IBrushType, maxWidth?: number): void {
+        drawText(text: string, x: number, y: number, brush: IBrushType, maxWidth?: number): void {
             this.ctx.fillStyle = brush;
             maxWidth && this.ctx.fillText(text, x, y, maxWidth);
             maxWidth || this.ctx.fillText(text, x, y);
+        }
+
+        drawTextAtCenter(text: string, x: number, y: number, brush: IBrushType): void {
+            this.ctx.fillStyle = brush;
+            let width = this.ctx.measureText(text).width;
+
+            let textBaseLine = this.textBaseLine;
+            this.textBaseLine = "middle";
+            x -= width / 2;
+            this.ctx.fillText(text, x, y);
+            this.textBaseLine = textBaseLine;
         }
 
         strokeText(text: string, x: number, y: number, brush: IBrushType, maxWidth?: number): void {
@@ -88,6 +99,18 @@
             this.ctx.arc(x, y, r, 0, Math.PI * 2);
         }
 
+        drawCircle(x: number, y: number, r: number, brush?: IBrushType, lineWidth?: number) {
+            if (lineWidth) this.ctx.lineWidth = lineWidth;
+            if (brush) this.ctx.strokeStyle = brush;
+            this.ctx.beginPath();
+            this.ctx.arc(x, y, r, 0, Math.PI * 2);
+            this.ctx.stroke();
+        }
+
+        stroke() {
+            this.ctx.stroke();
+        }
+
         rotate(angle: number, centerX?: number, centerY?: number) {
             this.ctx.rotate(angle % 360);
             centerX && this.ctx.translate(-centerX, -centerY);
@@ -102,8 +125,8 @@
             this.ctx.clearRect(0, 0, this.width(), this.height());
         }
 
-        transform(matrix: float3x2) {
-            this.ctx.transform.apply(this.ctx, matrix.get());
+        setTransform(matrix: float3x2) {
+            this.ctx.setTransform.apply(this.ctx, matrix.get());
         }
 
         createLinearGradient(x0: number, y0: number, x1: number, y1: number) {

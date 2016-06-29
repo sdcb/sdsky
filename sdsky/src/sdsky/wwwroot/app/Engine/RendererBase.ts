@@ -1,11 +1,16 @@
 ﻿namespace sdsky {
-    export class Scene {
-        private canvas: CanvasManager;
-        private loop = new TimedGameLoop();
+    export abstract class RendererBase {
+        private _order = 0;
+        onSetOrder = new PromiseEvent<number>();
+
         private renderers = Array<RendererBase>();
 
-        getCanvas() {
-            return this.canvas;
+        get order() {
+            return this._order;
+        }
+        set order(value: number) {
+            this._order = value;
+            this.onSetOrder.fire(this.order);
         }
 
         update(time: number) {
@@ -15,7 +20,6 @@
         }
 
         render(time: number) {
-            this.canvas.clear();
             for (let renderer of this.renderers) {
                 renderer.render(time);
             }
@@ -31,10 +35,7 @@
             this.renderers.sort((a, b) => b.order - a.order);
         }
 
-        constructor(canvasElement: HTMLCanvasElement) {
-            this.canvas = new CanvasManager(<HTMLCanvasElement>document.querySelector("canvas"));
-            this.loop.onRender.connect(time => this.render(time));
-            this.loop.onUpdate.connect(time => this.update(time));
+        constructor(protected canvas: CanvasManager) {
         }
     }
 }

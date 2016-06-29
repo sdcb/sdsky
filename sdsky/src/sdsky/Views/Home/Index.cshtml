@@ -19,17 +19,26 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
 
-        <script src="~/app/float3x2.js"></script>
-        <script src="~/app/FpsContext.js"></script>
-        <script src="~/app/PromiseEvent.js"></script>
-        <script src="~/app/CanvasManager.js"></script>
-        <script src="~/app/SimpleGameLoop.js"></script>
-        <script src="~/app/TimedGameLoop.js"></script>
+        <script src="~/app/Engine/float3x2.js"></script>
+        <script src="~/app/Engine/PromiseEvent.js"></script>
+        <script src="~/app/Engine/CanvasManager.js"></script>
+
+        <script src="~/app/Engine/SimpleGameLoop.js"></script>
+        <script src="~/app/Engine/TimedGameLoop.js"></script>
+
+        <script src="~/app/Engine/RendererBase.js"></script>
+        <script src="~/app/Engine/Scene.js"></script>
+        
+        <script src="~/app/Engine/FpsRenderer.js"></script>
+        <script src="~/app/Engine/ClockRenderer.js"></script>
+        <script src="~/app/Engine/AlignToWindowUtil.js"></script>
+        
         <script src="~/app/app.js"></script>
     </environment>
     <environment names="Production">
-        <script src="~/min/app.min.js"></script>
         <script src="~/min/lib.min.js"></script>
+        <script src="~/min/app.engine.min.js"></script>
+        <script src="~/min/app.min.js"></script>
     </environment>
 </body>
 </html>

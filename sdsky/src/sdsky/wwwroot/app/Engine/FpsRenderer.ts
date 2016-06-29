@@ -25,7 +25,7 @@
         }
 
         render(time: number) {
-            this.canvas.fillText(`FPS: ${this.ctx.fps.toFixed(0)}`, 0, 0, "blue");
+            this.canvas.drawText(`FPS: ${this.ctx.fps.toFixed(0)}`, 0, 0, "blue");
         }
     }
 }
