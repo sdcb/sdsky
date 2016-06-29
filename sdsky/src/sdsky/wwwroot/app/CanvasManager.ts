@@ -1,5 +1,6 @@
 ﻿namespace sdsky {
     type IBrushType = string | CanvasGradient | CanvasPattern;
+    type ITextBaseLineType = "top" | "hanging" | "middle" | "alphabetic" | "ideographic" | "bottom";
 
     export class CanvasManager {
         private ctx: CanvasRenderingContext2D;
@@ -14,6 +15,22 @@
 
         get height() {
             return this.canvas.height;
+        }
+
+        get font() {
+            return this.ctx.font;
+        }
+
+        set font(font: string) {
+            this.ctx.font = font;
+        }
+
+        get textBaseLine() {
+            return <ITextBaseLineType>this.ctx.textBaseline;
+        }
+
+        set textBaseLine(baseline: ITextBaseLineType) {
+            this.ctx.textBaseline = baseline;
         }
 
         fillRect(x: number, y: number, w: number, h: number, brush: IBrushType) {
@@ -77,7 +94,7 @@
 
         clear() {
             this.setIdentity();
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.clearRect(0, 0, this.width, this.height);
         }
 
         transform(matrix: float3x2) {
