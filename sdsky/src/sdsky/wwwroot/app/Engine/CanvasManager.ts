@@ -77,6 +77,18 @@
             this.ctx.lineTo(p2x, p2y);
         }
 
+        moveTo(x: number, y: number) {
+            this.ctx.moveTo(x, y);
+        }
+
+        lineTo(x: number, y: number) {
+            this.ctx.lineTo(x, y);
+        }
+
+        beginPath() {
+            this.ctx.beginPath();
+        }
+
         drawLine(p1x: number, p1y: number, p2x: number, p2y: number, brush?: IBrushType, lineWidth?: number) {
             if (lineWidth) this.ctx.lineWidth = lineWidth;
             if (brush) this.ctx.strokeStyle = brush;
@@ -107,7 +119,9 @@
             this.ctx.stroke();
         }
 
-        stroke() {
+        stroke(brush?: IBrushType, lineWidth?: number) {
+            if (brush) this.ctx.strokeStyle = brush;
+            if (lineWidth) this.ctx.lineWidth = lineWidth;
             this.ctx.stroke();
         }
 
@@ -133,8 +147,12 @@
             return this.ctx.createLinearGradient(x0, y0, x1, y1);
         }
 
-        createRadialGradient(r = 1) {
-            return this.ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+        createRadialGradient(...stops: Array<{offset: number, color: string}>) {
+            let gradient = this.ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+            for (let stop of stops) {
+                gradient.addColorStop(stop.offset, stop.color);
+            }
+            return gradient;
         }
 
         constructor(private canvas: HTMLCanvasElement) {
