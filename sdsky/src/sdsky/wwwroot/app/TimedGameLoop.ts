@@ -2,7 +2,7 @@
     export class TimedGameLoop extends SimpleGameLoop {
         private _totalRenderTime = 0;
         private _lastFrameTime = new Date();
-        public onRunningSlow = new PromiseEventVoid();
+        public onRunningSlow = new PromiseEvent<number>();
 
         get totalRenderTime() {
             return this._totalRenderTime;
@@ -20,7 +20,7 @@
             this._totalRenderTime += frameTime;
 
             if (frameTime > 0.25) {
-                this.onRunningSlow.fire();
+                this.onRunningSlow.fire(frameTime);
                 return true;
             }
         }
