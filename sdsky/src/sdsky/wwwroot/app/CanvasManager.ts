@@ -5,10 +5,6 @@
     export class CanvasManager {
         private ctx: CanvasRenderingContext2D;
 
-        constructor(private canvas: HTMLCanvasElement) {
-            this.ctx = canvas.getContext("2d");
-        }
-
         width() {
             return this.canvas.width;
         }
@@ -116,6 +112,12 @@
 
         createRadialGradient(r = 1) {
             return this.ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+        }
+
+        constructor(private canvas: HTMLCanvasElement) {
+            this.ctx = canvas.getContext("2d");
+            this.ctx.textBaseline = "top";
+            this.ctx.font = "14pt Consolas";
         }
     }
 }

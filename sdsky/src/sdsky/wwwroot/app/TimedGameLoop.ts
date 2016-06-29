@@ -12,15 +12,17 @@
             return this._lastFrameTime;
         }
 
-        render() {
+        update() {
+            super.update();
             let thisFrameTime = new Date();
             let frameTime = (thisFrameTime.getTime() - this._lastFrameTime.getTime()) / 1000;
-            if (frameTime > 0.25) {
-                this.onRunningSlow.fire();
-            }
             this._lastFrameTime = thisFrameTime;
             this._totalRenderTime += frameTime;
-            super.render();
+
+            if (frameTime > 0.25) {
+                this.onRunningSlow.fire();
+                return true;
+            }
         }
 
         roundPerSecond(round: number) {

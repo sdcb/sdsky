@@ -1,29 +1,77 @@
 ﻿namespace sdsky {
-    var canvas = new CanvasManager(<HTMLCanvasElement>document.querySelector("canvas"));
-    let loop = new TimedGameLoop();
+    export class Scene {
+        private canvas: CanvasManager;
+        private loop = new TimedGameLoop();
+        private renderers = Array<RendererBase>();
 
-    canvas.textBaseLine = "top";
-    canvas.font = "14pt Consolas";
+        getCanvas() {
+            return this.canvas;
+        }
 
-    let brush = canvas.createRadialGradient();
-    brush.addColorStop(0, "white");
-    brush.addColorStop(1, "black");
+        update(time: number) {
+            for (let renderer of this.renderers) {
+                renderer.update(time);
+            }
+        }
 
-    var fps = new FpsContext();
+        render(time: number) {
+            this.canvas.clear();
+            for (let renderer of this.renderers) {
+                renderer.render(time);
+            }
+        }
 
-    loop.onRender.connect(() => {
-        canvas.clear();
+        addRenderer(renderer: RendererBase) {
+            this.renderers.push(renderer);
+            this.sortRenderers();
+            renderer.onSetOrder.connect(() => this.sortRenderers());
+        }
 
-        fps.update(loop.totalRenderTime);
+        private sortRenderers() {
+            this.renderers.sort((a, b) => b.order - a.order);
+        }
 
-        canvas.fillText(`FPS: ${fps.fps.toFixed(0)}`, 0, 0, "blue");
+        constructor(canvasElement: HTMLCanvasElement) {
+            this.canvas = new CanvasManager(<HTMLCanvasElement>document.querySelector("canvas"));
+            this.loop.onRender.connect(time => this.render(time));
+            this.loop.onUpdate.connect(time => this.update(time));
+        }
+    }
 
-        canvas.transform(float3x2.scale(50, 50).translation(100, 100));
-        canvas.fillCircle(0, 0, 1, brush);
-    });
+    export abstract class RendererBase {
+        private _order = 0;
+        onSetOrder = new PromiseEvent<number>();
 
-    canvas.resizeTo(window.innerWidth, window.innerHeight);
-    window.addEventListener("resize", ev => {
-        canvas.resizeTo(window.innerWidth, window.innerHeight);
-    });
+        get order() {
+            return this._order;
+        }
+        set order(value: number) {
+            this._order = value;
+            this.onSetOrder.fire(this.order);
+        }
+
+        update(time: number) {
+        }
+
+        render(time: number) {
+        }
+
+        constructor(protected canvas: CanvasManager) {
+        }
+    }
+
+    export class FpsRenderer extends RendererBase {
+        private ctx = new FpsContext();
+
+        update(time: number) {
+            this.ctx.update(time);
+        }
+
+        render(time: number) {
+            this.canvas.fillText(`FPS: ${this.ctx.fps.toFixed(0)}`, 0, 0, "blue");
+        }
+    }
+
+    let scene = new Scene(<HTMLCanvasElement>document.querySelector("canvas"));
+    scene.addRenderer(new FpsRenderer(scene.getCanvas()));
 }
