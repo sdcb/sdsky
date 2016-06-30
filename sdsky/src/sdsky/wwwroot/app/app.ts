@@ -19,7 +19,7 @@
             }
         }
 
-        constructor(private maxPoints = 1000) {
+        constructor(private maxPoints = 500) {
         }
     }
 
@@ -106,7 +106,7 @@
     }
 
     export class StarRenderer extends RendererBase {
-        ss = new StarSystem(0.03, 20);
+        ss = new StarSystem(0.04, 12);
         starBrush = this.canvas.createRadialGradient(
             { offset: 0, color: "white" },
             { offset: 1, color: "black" });
@@ -149,59 +149,36 @@
             }
         }
 
-        initThree() {
+        initN(N: number) {
             this.ss.clear();
-            this.ss.add(5000, 0, -200,
-                6, +0);
-            this.ss.add(5000, -173.20508075688772935274463415059, 100,
-                -3, -5.1961524227066318805823390245176);
-            this.ss.add(5000, 173.20508075688772935274463415059, 100,
-                -3, 5.1961524227066318805823390245176);
-        }
-
-        initTwins() {
-            // 双子星
-            this.ss.clear();
-            this.ss.add(2000, 0, -200, 3, 0);
-            this.ss.add(2000, 0, 200, -3, 0);
-            //this.ss.add(10, 0, -300, -3, 0);
-            //this.ss.add(10, 0, -100, -2, 0);
-            //this.ss.add(10, 0, 300, 3, 0);
-            //this.ss.add(10, 0, 100, 2, 0);
-        }
-
-        initTwins2() {
-            this.ss.clear();
-            this.ss.add(1000, 0, -250, -3, 0);
-            this.ss.add(1000, 0, -200, 7, 0);
-
-            this.ss.add(1000, 0, 250, 3, 0);
-            this.ss.add(1000, 0, 200, -7, 0);
-        }
-
-        initFours() {
-            // 四星系统
-            this.ss.clear();
-            this.ss.add(1000, 0, -250, 2.5, 0);
-            this.ss.add(1000, 0, 250, -2.5, 0);
-            this.ss.add(1000, -250, 0, 0, -2.5);
-            this.ss.add(1000, 250, 0, 0, 2.5);
-            this.ss.add(10, 0, -300, -4, 0);
-            this.ss.add(10, 300, 0, 0, -4);
-            this.ss.add(10, 0, 300, 4, 0);
-            this.ss.add(10, -300, 0, 0, 4);
+            for (let i = 0; i < N; ++i) {
+                let angle = i / N * Math.PI * 2;
+                let R = 200;
+                let M = 10000 * 5 / (N * Math.sqrt(N) * Math.log(N));
+                let v = 5;
+                let px = R * Math.sin(angle);
+                let py = R * -Math.cos(angle);
+                let vx = v * Math.cos(angle);
+                let vy = v * Math.sin(angle);
+                this.ss.add(M, px, py, vx, vy);
+            }
         }
 
         constructor(canvas: CanvasManager) {
             super(canvas);
-            this.initTwins2();
+            this.initN(2);
             let keyMap = <{ [key: string]: () => void }>{
-                "1": () => this.initTwins2(), 
-                "2": () => this.initTwins(), 
-                "3": () => this.initThree(), 
-                "4": () => this.initFours(), 
-                "+": () => this.ss.times += 5, 
-                "-": () => this.ss.times -= 5
+                "2": () => this.initN(2),
+                "3": () => this.initN(3),
+                "4": () => this.initN(4),
+                "5": () => this.initN(5),
+                "6": () => this.initN(6),
+                "7": () => this.initN(7),
+                "8": () => this.initN(8),
+                "9": () => this.initN(9),
+                "0": () => this.initN(43),
+                "+": () => this.ss.times += 4,
+                "-": () => this.ss.times -= 4
             };
             addEventListener("keydown", ev => {
                 let work = keyMap[ev.key];
